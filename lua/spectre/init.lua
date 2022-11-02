@@ -80,9 +80,19 @@ M.open = function(opts)
         search_text = '',
         replace_text = '',
         path = '',
+        current_file = false,
         is_close = false, -- close an exists instance of spectre then open new
         is_file = false
     }, opts or {}) or {}
+    
+    -- copy from open_file_search.
+    if path == '' and current_file == true then
+        local path = vim.fn.fnameescape(vim.fn.expand('%:p:.'))
+        if vim.loop.os_uname().sysname == 'Windows_NT' then
+            path = vim.fn.substitute(path, '\\', '/', 'g')
+        end
+        opts.path = path
+    end
 
     state.status_line = ''
     opts.search_text = utils.trim(opts.search_text)
