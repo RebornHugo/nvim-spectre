@@ -86,7 +86,8 @@ M.open = function(opts)
     }, opts or {}) or {}
     
     -- copy from open_file_search.
-    if path == '' and current_file == true then
+    -- https://github.com/nvim-pack/nvim-spectre/issues/93
+    if opts.path == '' and opts.current_file == true then
         local path = vim.fn.fnameescape(vim.fn.expand('%:p:.'))
         if vim.loop.os_uname().sysname == 'Windows_NT' then
             path = vim.fn.substitute(path, '\\', '/', 'g')
